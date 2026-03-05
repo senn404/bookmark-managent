@@ -51,12 +51,13 @@ func TestHealthCheckEndpoint(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 
-			cfg, err := config.NewConfig("")
-			if err != nil {
-				fmt.Println(err)
+			cfg := config.Config{
+				AppPort:     "8080",
+				ServiceName: "bookmark_service",
+				InstanceID:  "7dee4e26-66fd-44c1-a135-fe4ce9e4b8aa",
 			}
 
-			app := api.New(cfg)
+			app := api.New(&cfg)
 
 			rec := tc.setupTestHTTP(app)
 
@@ -70,7 +71,7 @@ func TestHealthCheckEndpoint(t *testing.T) {
 			assert.Equal(t, tc.expectedServiceName, body.ServiceName)
 
 			// Sử dụng parse để test instance id có trả về đúng format và không rỗng khong
-			_, err = uuid.Parse(body.InstanceId)
+			_, err := uuid.Parse(body.InstanceId)
 			assert.Equal(t, nil, err)
 			assert.NotEqual(t, "", body.InstanceId)
 		})
