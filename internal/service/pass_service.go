@@ -7,30 +7,36 @@ import (
 )
 
 const (
-	charset    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+"
+	// charset defines the set of characters used for password generation,
+	// including lowercase, uppercase, digits, and special characters.
+	charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+"
+	// passLength defines the fixed length of generated passwords.
 	passLength = 16
 )
 
+// passwordService is the concrete implementation of the Password interface.
+// It generates cryptographically secure random passwords.
 type passwordService struct {
 }
 
+// Password defines the interface for password generation operations.
+//
 //go:generate mockery --name Password --filename pass_service.go
 type Password interface {
+	// GeneratePassword creates a new random password and returns it.
+	// It returns an error if the cryptographic random number generator fails.
 	GeneratePassword() (string, error)
 }
 
+// NewPassword creates a new Password service instance.
 func NewPassword() Password {
 	return &passwordService{}
 }
 
-// @Summary GeneratePassword
-// @Description GeneratePassword
-// @Tags password
-// @Accept json
-// @Produce json
-// @Success 200 {string} string
-// @Failure 500 {string} string
-// @Router /gen-pass [get]
+// GeneratePassword generates a cryptographically secure random password
+// of length passLength using characters from the defined charset.
+// It uses crypto/rand for secure random number generation, making the
+// generated passwords suitable for security-sensitive applications.
 func (s *passwordService) GeneratePassword() (string, error) {
 	var strBuilder bytes.Buffer
 

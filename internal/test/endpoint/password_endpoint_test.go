@@ -1,14 +1,19 @@
 package endpoint
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/go-playground/assert/v2"
 	"github.com/senn404/bookmark-managent/internal/api"
+	"github.com/senn404/bookmark-managent/internal/config"
 )
 
+// TestPasswordEndpoint is an integration test that verifies the /gen-pass
+// endpoint returns a successful response with the expected password length
+// through the full API stack.
 func TestPasswordEndpoint(t *testing.T) {
 	t.Parallel()
 
@@ -28,9 +33,9 @@ func TestPasswordEndpoint(t *testing.T) {
 				api.ServeHTTP(respRecorder, req)
 				return respRecorder
 			},
-			
+
 			expectedStatus: http.StatusOK,
-			expectedLen:    16,
+			expectedLen:    31, //Vì là json nên len dài hơn
 		},
 	}
 
@@ -38,12 +43,14 @@ func TestPasswordEndpoint(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 
-			app := api.New(&api.Config{})
+			app := api.New(&config.Config{})
 
 			rec := tc.setupTestHTTP(app)
 
+			fmt.Println(rec.Body)
+
 			assert.Equal(t, tc.expectedStatus, rec.Code)
-			assert.Equal(t, tc.expectedLen, rec.Body.Len())
+			assert.Equal(t, tc.expectedLen, len(rec.Body.String()))
 		})
 	}
 }

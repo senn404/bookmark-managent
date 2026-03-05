@@ -6,6 +6,8 @@ import (
 	"github.com/go-playground/assert/v2"
 )
 
+// TestPasswordService_GeneratePassword verifies that the password service
+// generates a password of the expected length (16 characters) without errors.
 func TestPasswordService_GeneratePassword(t *testing.T) {
 	t.Parallel()
 

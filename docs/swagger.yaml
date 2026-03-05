@@ -1,13 +1,22 @@
 basePath: /
 definitions:
-  handler.ErrorResponse:
+  handler.errorResponse:
     properties:
       error:
         type: string
     type: object
-  handler.SuccessResponse:
+  handler.genPassResponse:
     properties:
       password:
+        type: string
+    type: object
+  handler.healthCheckResponse:
+    properties:
+      instace_id:
+        type: string
+      message:
+        type: string
+      service_name:
         type: string
     type: object
 host: localhost:8080
@@ -36,6 +45,22 @@ paths:
       summary: GeneratePassword
       tags:
       - password
+  /health-check:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.healthCheckResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Health Check
+      tags:
+      - health-check
 schemes:
 - http
 swagger: "2.0"
