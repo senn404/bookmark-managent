@@ -11,6 +11,9 @@ import (
 	"github.com/senn404/bookmark-managent/internal/service/mocks"
 )
 
+// TestPasswordHandler_GenPass verifies that the GenPass handler correctly
+// generates and returns a password on success, and returns an appropriate
+// error response on failure. It uses a mock Password service.
 func TestPasswordHandler_GenPass(t *testing.T) {
 	t.Parallel()
 

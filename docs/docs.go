@@ -43,10 +43,35 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/health-check": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health-check"
+                ],
+                "summary": "Health Check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.healthCheckResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "handler.ErrorResponse": {
+        "handler.errorResponse": {
             "type": "object",
             "properties": {
                 "error": {
@@ -54,10 +79,24 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.SuccessResponse": {
+        "handler.genPassResponse": {
             "type": "object",
             "properties": {
                 "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.healthCheckResponse": {
+            "type": "object",
+            "properties": {
+                "instace_id": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "service_name": {
                     "type": "string"
                 }
             }

@@ -1,8 +1,10 @@
+// Package main is the entry point for the Bookmark Management API server.
+// It initializes the application configuration and starts the HTTP server.
 package main
 
 import (
-	"github.com/joho/godotenv"
 	"github.com/senn404/bookmark-managent/internal/api"
+	"github.com/senn404/bookmark-managent/internal/config"
 )
 
 // @title Bookmark Management API
@@ -11,13 +13,12 @@ import (
 // @host localhost:8080
 // @BasePath /
 // @schemes http
+//
+// main initializes the application configuration from environment variables
+// and starts the Bookmark Management API server. It panics if the configuration
+// cannot be loaded.
 func main() {
-	// load env
-	if err := godotenv.Load(); err != nil {
-		panic(err)
-	}
-
-	cfg, err := api.NewConfig("")
+	cfg, err := config.NewConfig("")
 	if err != nil {
 		panic(err)
 	}
