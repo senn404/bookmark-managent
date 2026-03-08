@@ -40,5 +40,5 @@ func NewHealthCheckHandler(svc service.HealthCheck) HealthCheckHandler {
 // @Failure 500 {object} errorResponse
 // @Router /health-check [get]
 func (h *healthCheckHandler) HealthCheck(c *gin.Context) {
-	c.JSON(http.StatusOK, h.svc.GetStatus())
+	c.JSON(http.StatusOK, h.svc.GetStatus(c))
 }

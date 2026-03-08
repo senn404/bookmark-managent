@@ -7,9 +7,6 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-const (
-	urlExpTime = 1 * time.Hour
-)
 
 type URLStorage interface {
 	StoreURL(ctx context.Context, code, url string, expTime time.Duration) (string, error)

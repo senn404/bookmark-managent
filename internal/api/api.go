@@ -59,7 +59,8 @@ func (a *api) registerEP() {
 	passSvc := service.NewPassword()
 	passHandler := handler.NewPasswordHandler(passSvc)
 	//healthcheck handler
-	healthCheck := service.NewHealthCheck(a.cfg)
+	healthCheckRedis := repository.NewHealthCheckRedis(a.redisClient)
+	healthCheck := service.NewHealthCheck(a.cfg, healthCheckRedis)
 	healthCheckHandler := handler.NewHealthCheckHandler(healthCheck)
 	//url shorten handler
 	urlStorage := repository.NewURLStorage(a.redisClient)
