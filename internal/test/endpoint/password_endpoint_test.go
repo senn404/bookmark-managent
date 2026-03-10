@@ -43,7 +43,7 @@ func TestPasswordEndpoint(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 
-			app := api.New(&config.Config{})
+			app := api.New(&config.Config{}, nil)
 
 			rec := tc.setupTestHTTP(app)
 

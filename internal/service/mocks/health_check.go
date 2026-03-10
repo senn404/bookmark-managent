@@ -3,6 +3,8 @@
 package mocks
 
 import (
+	context "context"
+
 	service "github.com/senn404/bookmark-managent/internal/service"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -12,17 +14,17 @@ type HealthCheck struct {
 	mock.Mock
 }
 
-// GetStatus provides a mock function with no fields
-func (_m *HealthCheck) GetStatus() service.HealthStatus {
-	ret := _m.Called()
+// GetStatus provides a mock function with given fields: ctx
+func (_m *HealthCheck) GetStatus(ctx context.Context) service.HealthStatus {
+	ret := _m.Called(ctx)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetStatus")
 	}
 
 	var r0 service.HealthStatus
-	if rf, ok := ret.Get(0).(func() service.HealthStatus); ok {
-		r0 = rf()
+	if rf, ok := ret.Get(0).(func(context.Context) service.HealthStatus); ok {
+		r0 = rf(ctx)
 	} else {
 		r0 = ret.Get(0).(service.HealthStatus)
 	}
